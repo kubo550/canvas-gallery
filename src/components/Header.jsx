@@ -2,13 +2,8 @@ import React, { useContext } from "react";
 import { AuthContext } from '../auth/Auth';
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
-import styled from 'styled-components'
-import { motion } from 'framer-motion'
 import app from '../firebase/app'
-
-const AnimatedStyledNavbar = styled(motion.custom(Navbar))`
-  background-color: #6930c3 !important;
-`
+import { AnimatedStyledNavbar } from '../layout'
 
 const Header = () => {
   const { currentUser } = useContext(AuthContext);
