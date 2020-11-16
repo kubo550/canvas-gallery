@@ -30,7 +30,22 @@ class FireApp {
         JSON.stringify(this.auth.currentUser)
       );
       setTimeout(() => history.push("/"), 500);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async logIn(email, password) {
+    try {
+      await this.auth.signInWithEmailAndPassword(email, password);
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify(this.auth.currentUser)
+      );
+      return null;
+    } catch (err) {
+      return err;
+    }
   }
 
   logOut() {
