@@ -1,9 +1,13 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback, useContext } from "react";
 import app from "../firebase/app";
+import { AuthContext } from "../auth/Auth";
 
 const Canvas = ({ color, lineWidth }) => {
+  const { currentUser } = useContext(AuthContext);
+  
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
+
   const [isDrawing, setIsDrawing] = useState(false);
   const [image, setImage] = useState(null);
   const [authorName, setAuthorName] = useState("");
@@ -60,14 +64,14 @@ const Canvas = ({ color, lineWidth }) => {
     const data = {
       image,
       name : authorName,
-      uid: "admin",
-      uName: "admin",
+      uid: currentUser.uid,
+      uName: currentUser.displayName,
       createdAt: new Date().toLocaleString(),
     };
-    const firebaseRef = app.database().ref("cavnases");
+    const firebaseRef = app.database.ref("cavnases");
     try {
-      const res = await firebaseRef.push(data);
-      console.log(res);
+      await firebaseRef.push(data);
+      console.log('udalo się');
     } catch (err) {
       console.log(err.message);
     }
@@ -92,12 +96,7 @@ const Canvas = ({ color, lineWidth }) => {
         <div className='popup-container'>
           <div className='popup'>
             <h3>Name Your Project!</h3>
-            <input
-              type='text'
-              autoFocus
-              value={authorName}
-              onChange={e => setAuthorName(e.target.value)}
-            />
+            <input type='text' autoFocus value={authorName} onChange={e => setAuthorName(e.target.value)}/>
             <button onClick={sendToFirebase}>Save file</button>
           </div>
         </div>

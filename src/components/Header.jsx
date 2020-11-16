@@ -7,7 +7,7 @@ import { AnimatedStyledNavbar } from '../layout'
 
 const Header = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
+  // console.log(currentUser);
   return (
     <AnimatedStyledNavbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Navbar.Brand href='/' className="nav-link" >React-Bootstrap</Navbar.Brand>
