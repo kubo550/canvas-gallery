@@ -1,30 +1,29 @@
 import React, { useState } from "react";
 import CanvasImage from "../components/CanvasImage";
-import { useQuery } from 'react-query'
-import { fetchFromFirebase } from '../api'
+import { useQuery } from 'react-query';
+import { fetchFromFirebase } from '../api';
+import { Container, Row } from 'react-bootstrap';
 
 const Home = () => {
-  const [query, setQuery] = useState('')
-  const {data, isLoading, isError} = useQuery(['firebaseData', query], fetchFromFirebase)
+  const [query, setQuery] = useState('');
+  const { data, isLoading, isError } = useQuery(['firebaseData', query], fetchFromFirebase);
 
   return (
-    <div className="container">
-
-      <div className="row">
+    <Container>
+      <Row>
         <label className="search col-12 text-center">
-            <input type="text" placeholder="Search"  value={query} onChange={e => setQuery(e.target.value)} />
-            <i className="fas fa-search"></i>
+          <input type="text" placeholder="Search" value={query} onChange={e => setQuery(e.target.value)} />
+          <i className="fas fa-search"></i>
         </label>
-      </div>
+      </Row>
 
-      <div className='row'>
-       {isLoading && <p>Loading...</p> }
-       {isError && <p>Error</p> }
-       {data &&  data.map(e => <CanvasImage key={e.id} data={e} /> )}
-      </div>
-      
-    </div>
+      <Row>
+        {isLoading && <p>Loading...</p>}
+        {isError && <p>Error</p>}
+        {data && data.map((e, i) => <CanvasImage key={e.id} data={e} index={i} />)}
+      </Row>
+    </Container>
   );
-};
+}
 
 export default Home;
